@@ -12,7 +12,7 @@ const startServer = async () => {
   await connectDB();
 
   // Sync database (creates tables based on models)
-  await sequelize.sync();
+ await sequelize.sync({ alter: true });
   console.log('✅ Database synced');
 
   app.listen(PORT, () => {
