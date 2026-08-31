@@ -27,9 +27,17 @@ const User = sequelize.define('User', {
     type: DataTypes.ENUM('job_seeker', 'employer'),
     allowNull: false,
   },
+  resetPasswordToken: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  resetPasswordExpires: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
 }, {
   tableName: 'users',
-  timestamps: true, // adds createdAt, updatedAt automatically
+  timestamps: true,
 });
 
 module.exports = User;
