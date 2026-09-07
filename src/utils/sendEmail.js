@@ -1,19 +1,10 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmail = async ({ to, subject, html }) => {
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    family: 4, // Force IPv4 — fixes ENETUNREACH on some cloud hosts
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
-  await transporter.sendMail({
-    from: `"Job Portal App" <${process.env.EMAIL_USER}>`,
+  await resend.emails.send({
+    from: 'Job Portal App <onboarding@resend.dev>',
     to,
     subject,
     html,
