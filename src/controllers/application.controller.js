@@ -24,7 +24,7 @@ exports.applyToJob = async (req, res) => {
       return res.status(400).json({ message: 'You have already applied to this job' });
     }
 
-    const resumeUrl = req.file ? `/uploads/${req.file.filename}` : null;
+       const resumeUrl = req.file ? req.file.path : null;
 
     if (!resumeUrl) {
       return res.status(400).json({ message: 'Resume file is required' });
