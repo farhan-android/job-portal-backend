@@ -2,13 +2,19 @@ const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cloudinary = require('../config/cloudinary');
 
+const path = require('path');
+
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'resumes', // Cloudinary par isi naam ke folder mein sab resumes jayengi
-    resource_type: 'raw', // PDF/DOC/DOCX jaisi non-image files ke liye zaroori
+    folder: 'resumes',
+    resource_type: 'raw',
     allowed_formats: ['pdf', 'doc', 'docx'],
-    public_id: (req, file) => `${Date.now()}-${file.originalname.split('.')[0]}`,
+    public_id: (req, file) => {
+      const ext = path.extname(file.originalname); // e.g. ".pdf"
+      const nameOnly = path.basename(file.originalname, ext); // e.g. "resume"
+      return `${Date.now()}-${nameOnly}${ext}`; // e.g. "1234567-resume.pdf"
+    },
   },
 });
 
